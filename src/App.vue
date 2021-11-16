@@ -7,16 +7,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+// import { defineComponent, reactive, toRefs } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'App',
   components: {},
-  data() {
-    return {
-      name: 'Link', // typescript will infer the type automatically (string here)
-      age: 24 as number | string, // type assertion
-    };
+  setup() {
+    // 1. data using reactive state
+    // const state = reactive({
+    //   name: 'Link',
+    // age: 24 as string | number, // type assertion
+    // });
+
+    // state.name = 999 // cannot change type
+    // state.age = '25'
+
+    // return { ...toRefs(state) };
+
+    // 2. data using refs
+    const name = ref('Link');
+    const age = ref<number | string>(25); // defining type using generic
+
+    age.value = '28';
+
+    return { name, age };
   },
   methods: {
     changeName(name: string) {
